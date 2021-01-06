@@ -53,6 +53,11 @@
         <!-- 方法函数  -->
         <button v-on:click="say()">click</button>
 
+        <!-- vue实现分页-->
+        <div>当前是第{{currentPage}}页</div>
+        <button v-on:click="pre">上一页</button>
+        <button v-for="num in max_page" v-on:click="changePage(num)">{{num}}</button>
+        <button v-on:click="next">下一页</button>
     </div>
 
     <script src="./vue.min.js"></script>
@@ -91,7 +96,10 @@
                 }, ],
                 red: 'red',
                 blue: 'blue',
-                green: 'green'
+                green: 'green',
+                currentPage: 1,
+                max_page: 10,
+                min_page: 1,
             },
             methods: {
                 reverseMessage: function() {
@@ -100,6 +108,21 @@
                 say: function() {
                     console.log(this.gongFu[0].name)
                     console.log(" 发生什么事了>了")
+                },
+                changePage(num) {
+                    this.currentPage = num
+                },
+                pre: function() {
+                    if (this.currentPage <= this.min_page) {
+                        this.currentPage = this.min_page
+                    } else
+                        this.currentPage--;
+                },
+                next: function() {
+                    if (this.currentPage >= this.max_page) {
+                        this.currentPage = this.max_page
+                    } else
+                        this.currentPage++
                 }
             }
         })
