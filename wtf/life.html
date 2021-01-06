@@ -1,0 +1,64 @@
+<!DOCTYPE html>>
+<html lang="en">
+
+<head>
+    <script src="./vue.min.js"></script>
+    <meta charset="UTF-8">
+</head>
+
+<body>
+    <div id="app">
+        <h1>生命周期---钩子函数</h1>
+
+        <div>{{age}}</div>
+    </div>
+    <script>
+        let vm = new Vue({
+            el: '#app',
+            data: {
+                age: 18
+            },
+            beforeCreate: function() {
+                console.log(this.$data);
+                console.log(this.$el)
+                console.log('beforeCreate--1');
+            },
+            // 最早发起请求的时机,发送axios请求
+            created: function() {
+                console.log(this.$data);
+                console.log(this.$el)
+                console.log('Created--2');
+                this.getData();
+
+            },
+            beforeMount() {
+                console.log(this.$data);
+                console.log(this.$el)
+                console.log('beforeMount--3');
+            },
+            // 会执行很多次
+            beforeUpdate() {
+                console.log(this.$data);
+                console.log(this.$el)
+                console.log('beforeUpdate--4');
+            },
+            updated() {
+                console.log(this.$data);
+                console.log(this.$el)
+                console.log('updated--5');
+            },
+            destroyed() {
+                console.log(this.$data);
+                console.log(this.$el)
+                console.log('destroyed--6');
+            },
+            methods: {
+                getData() {
+                    console.log('吃屁?')
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>
