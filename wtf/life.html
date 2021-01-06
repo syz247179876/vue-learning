@@ -8,15 +8,30 @@
 
 <body>
     <div id="app">
-        <h1>生命周期---钩子函数</h1>
-
-        <div>{{age}}</div>
+        <!-- 单选框-->
+        <label for="sex">男</label>
+        <input name="sex" type="radio" value="male" v-model="val1">
+        <label for="sex">女</label>
+        <input name="sex" type="radio" value="femail" v-model="val1">
+        <label for="sex">保密</label>
+        <input name="sex" type="radio" value="none" v-model="val1">
+        <p>你的性别是:{{val1}}</p>
+        <p>你的爱好:</p>
+        <label for="hobby">唱</label>
+        <input name="hobby" type="checkbox" value="sing" v-model="val2">
+        <label for="hobby">跳</label>
+        <input name="hobby" type="checkbox" value="dance" v-model="val2">
+        <label for="hobby">rap</label>
+        <input name="hobby" type="checkbox" value="rap" v-model="val2">
+        <p>你的爱好是:{{val2}}</p>
     </div>
     <script>
         let vm = new Vue({
             el: '#app',
             data: {
-                age: 18
+                age: 18,
+                val1: 'none',
+                val2: []
             },
             beforeCreate: function() {
                 console.log(this.$data);
