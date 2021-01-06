@@ -16,6 +16,14 @@
         .green {
             color: green;
         }
+        
+        .active {
+            background-color: yellow;
+        }
+        
+        .disabled {
+            cursor: no-drop;
+        }
     </style>
 </head>
 
@@ -55,10 +63,14 @@
 
         <!-- vue实现分页-->
         <div>当前是第{{currentPage}}页</div>
-        <button v-on:click="pre">上一页</button>
-        <button v-for="num in max_page" v-on:click="changePage(num)">{{num}}</button>
-        <button v-on:click="next">下一页</button>
-    </div>
+        <!-- <button v-on:click="pre" v-if="min_page === currentPage" :disabled="true">上一页</button>
+        <button v-on:click="pre" v-else="min_page !== currentPage" :disabled="false">上一页</button> -->
+        <button @click="pre" :disabled="min_page === currentPage" :class="{disabled: min_page === currentPage}">上一页</button>
+        <!-- 如果num==c urrentPage成立,则class:active-->
+        <button v-for="num in max_page" v-on:click="changePage(num)" v-bind:class="{active: num === currentPage}">{{num}}</button>
+        <!-- <button v-on:click="next" v-if="max_page === currentPage" :disabled="true">下一页</button>
+        <button v-on:click="next" v-else="max_page !== currentPage" :disabled="false">下一页</button> -->
+        <button @click="next" :disabled="max_page === currentPage" :class="{disabled: max_page === currentPage}">下一页</button> </div>
 
     <script src="./vue.min.js"></script>
     <script>
