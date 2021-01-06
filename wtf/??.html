@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <script src="./vue.min.js"></script>
+    <style>
+        .tip {
+            color: red;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <input type="text" v-model="thing">
+        <button @click="add()">保存</button>
+        <!-- tip 提示 -->
+        <p :class="tip" v-model="correct" v-if="!correct || thing === ''">您需要输入事项内容!</p>
+        <p>待完成的事项</p>
+        <div v-for="(item,index) in TodoList">
+            {{index+1}}. {{item}}
+            <button @click="check(index, item) ">完成</button>
+        </div>
+        <p>已完成的事项</p>
+        <div v-for="(item, index) in FishList ">
+            <span>{{index+1}}. {{item}}
+                <button @click="delete_item(index)">删除已完成事项</button>
+            </span>
+        </div>
+</body>
+
+<script>
+    let ve = new Vue({
+        el: '#app',
+        data: {
+            thing: '',
+            TodoList: [],
+            FishList: [],
+            correct: true,
+            tip: 'tip'
+        },
+        methods: {
+            /* 添加事项 */
+            add: function() {
+                if (this.thing === '')
+                    this.correct = false;
+                else {
+                    this.TodoList.push(this.thing);
+                    this.thing = '';
+                }
+            },
+            /* 审核事项 */
+            check: function(index, item) {
+                this.TodoList.splice(index, 1);
+                this.FishList.push(item);
+            },
+
+            /* 删除已经完成事项 */
+            delete_item: function(index) {
+                this.FishList.splice(index, 1);
+            }
+        }
+    })
+</script>
+
+</html>
