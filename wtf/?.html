@@ -1,0 +1,63 @@
+<html>
+
+<head>
+    <style>
+        .done li {
+            color: green;
+            text-decoration: line-through;
+        }
+        
+        .todo li {
+            width: 200px;
+            height: 28px;
+            padding: 10px;
+            position: relative;
+        }
+        
+        .todo li button {
+            position: absolute;
+            top: 0;
+            right: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <p>代办事项</p>
+    <input type="text" id="inp" placeholder="请输入代办事项">
+    <button onclick="save()">保存</button>
+    <ol class="todo">
+        <li>
+            <span>
+            eating
+        </span>
+            <button>完成</button>
+        </li>
+
+        <li><span>sleeping</span> <button>完成</button></li>
+
+        <li><span>coding</span><button>完成</button></li>
+    </ol <p>已完成的事项</p>
+    <ol class="done">
+        <li>Freshman</li>
+        <li>Sophomer</li>
+    </ol>
+</body>
+
+<script>
+    let eventList = [];
+
+
+    function save() {
+        let event = inp.value;
+        eventList.push(event);
+        console.log(eventList)
+        let content = '';
+        for (let index = 0; index < eventList.length; index++) {
+            content += `<li>${eventList[index]}</li>`
+        }
+        console.log(eventList);
+    }
+</script>
+
+</html>

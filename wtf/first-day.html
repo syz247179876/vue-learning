@@ -1,0 +1,35 @@
+<html>
+
+<head>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <meta charset="UTF-8">
+</head>
+
+<body>
+    <div id="app">
+        {{message}}
+    </div>
+    <button id="send-request1" v-on:click="send_message">测试链接</button>
+
+</body>
+<script>
+    var app = new Vue({
+        el: '#app',
+        data: {
+            message: 'syz'
+        }
+    })
+
+    var app1 = new Vue({
+        el: '#send-request1',
+        methods: {
+            send_message: function() {
+                // 获取远端图片
+                axios.get('/usr?ID=12345')
+            }
+        }
+    })
+</script>
+
+</html>

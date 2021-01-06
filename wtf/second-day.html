@@ -1,0 +1,128 @@
+<html>
+
+<head>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <link rel="stylesheet" href="../css/first-day.css">
+    <style>
+        .done li {
+            color: green;
+            text-decoration: line-through;
+        }
+        
+        .todo li {
+            width: 200px;
+            height: 28px;
+            padding: 10px;
+            position: relative;
+        }
+        
+        .todo li button {
+            position: absolute;
+            top: 0;
+            right: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <p>代办事项</p>
+    <input type="text" placeholder="请输入代办事项">
+    <button>保存</button>
+    <ol class="todo">
+        <li>
+            <span>
+            eating
+        </span>
+            <button>完成</button>
+        </li>
+
+        <li><span>sleeping</span> <button>完成</button></li>
+
+        <li><span>coding</span><button>完成</button></li>
+    </ol>
+    <p>已完成的事项</p>
+    <ol class="done">
+        <li>Freshman</li>
+        <li>Sophomer</li>
+    </ol>
+    <div id="app-1">
+        <todo-item v-for="item in TodoLists" v-bind:todo="item" v-bind:key="item.id">
+
+        </todo-item>
+    </div>
+
+    <div id="pagination">
+        <pagination-item v-for="item in pages" v-bind:page="item">
+
+        </pagination-item>
+    </div>
+
+    <div class="box">
+
+    </div>
+
+    <div class="box2">
+
+    </div>
+
+
+</body>
+
+<script>
+    Vue.component('todo-item', {
+        props: ['todo'],
+        template: '<li>{{todo.text}} <button id="{{todo.id}}">完成</button></li>'
+    })
+    var app = new Vue({
+        el: '#app-1',
+        data: {
+            TodoLists: [{
+                id: 0,
+                text: 'eating'
+            }, {
+                id: 1,
+                text: 'sleeping',
+                id: 2,
+                text: 'coding'
+            }]
+        }
+    })
+
+    Vue.component('pagination-item', {
+        props: ['page'],
+        template: '<Button id={{page.id}}>{{page.text}}</Button> '
+    })
+
+    var pagination = new Vue({
+        el: '#pagination',
+        data: {
+            pages: [{
+                id: 0,
+                text: '<'
+            }, {
+                id: 1,
+                text: '1'
+            }, {
+                id: 2,
+                text: '2'
+            }, {
+                id: 3,
+                text: '3'
+            }, {
+                id: 4,
+                text: '4'
+            }, {
+                id: 5,
+                text: '6'
+            }, {
+                id: 6,
+                text: '6'
+            }, {
+                id: -1,
+                text: '>'
+            }]
+        }
+    })
+</script>
+
+</html>

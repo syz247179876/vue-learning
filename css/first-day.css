@@ -1,0 +1,20 @@
+/* 三角形 */    
+
+.box {
+    width: 0;
+    height: 0;
+    border-color: transparent red transparent transparent;
+    border-style: solid;
+    border-width: 100px 50px 0 0;
+}
+
+
+/* 胶囊 */
+
+.box2 {
+    margin: 50px;
+    width: 300px;
+    height: 100px;
+    border-radius: 50px;
+    background-color: rebeccapurple;
+}

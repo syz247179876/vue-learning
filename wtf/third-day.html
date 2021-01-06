@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Third-day</title>
+    <style>
+        .red {
+            color: red;
+        }
+        
+        .blue {
+            color: blue;
+        }
+        
+        .green {
+            color: green;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="app1">
+        <!-- 双花括号, 文本插值-->
+        {{message}}
+        <!-- 三元运算符-->
+        <p>{{hasWude ?'':'不'}}讲武得</p>
+        <hr>
+        <p v-if="seen">出现</p>
+        <input type="text" v-model="text"> {{text}}
+        <button v-on:click="reverseMessage">button</button>
+        <p v-text="name"></p>
+        <p v-html="text2"></p>
+        <!-- 删掉标签 -->
+        <button v-if="isLogin">退出登录</button>
+        <button v-else>请登录</button>
+
+        <!-- 通过css级别来设定display:none -->
+        <button v-show="isLogin">退出登录</button>
+        <button v-show="!isLogin">请登录</button>
+        <br>
+        <button @click="isLogin = !isLogin">切换登录状态</button>
+
+        <span v-for="(gongfu,index) in gongFu"><br>闪电五连鞭--第{{index+1}}招:{{gongfu.name}}, 价格:${{gongfu.price.toFixed(2)}}</span>
+
+        <!--  绑定标签属性  -->
+        <p>v-bind: 绑定标签属性,语法糖形式:</p>
+        <p v-bind:class="red">大娃</p>
+        <p v-bind:class="blue">二娃</p>
+        <p v-bind:class="green">三娃</p>
+
+    </div>
+
+    <script src="./vue.min.js"></script>
+    <script>
+        // 实例化
+        let vm = new Vue({
+
+            // 2.添加选项参数
+            // 3. 作用的元素
+            el: '#app1',
+
+            // 4.数据
+            data: {
+                message: 20,
+                hasWude: true,
+                text: "hello syz",
+                seen: true,
+                name: "syz",
+                text2: '<mark>hello vue</mark>',
+                isLogin: false,
+                gongFu: [{
+                    name: '抗龙有悔',
+                    price: 19
+                }, {
+                    name: '飞龙在天',
+                    price: 42
+                }, {
+                    name: '杀人剑法',
+                    price: 55
+                }, {
+                    name: '力劈华山',
+                    price: 77
+                }, {
+                    name: '万箭归宗',
+                    price: 99
+                }, ],
+                red: 'red',
+                blue: 'blue',
+                green: 'green'
+            },
+            methods: {
+                reverseMessage: function() {
+                    this.message++;
+                }
+            }
+        })
+    </script>
+</body>
+
+
+
+</html>
