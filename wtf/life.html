@@ -24,6 +24,18 @@
         <label for="hobby">rap</label>
         <input name="hobby" type="checkbox" value="rap" v-model="val2">
         <p>你的爱好是:{{val2}}</p>
+
+        <p>我女朋友的特点</p>
+        <select name="" id="" v-model="val3">
+            <option value="1">美丽</option>
+            <option value="2">善良</option>
+            <option value="3">性感</option>
+            <option value="4">可爱</option>
+            <option value="5">温柔</option>
+            <option value="6">纯真</option>
+            <option value="7">贤惠</option>
+        </select>
+        <p>我的女朋友的特点是:{{val3}}</p>
     </div>
     <script>
         let vm = new Vue({
@@ -31,7 +43,8 @@
             data: {
                 age: 18,
                 val1: 'none',
-                val2: []
+                val2: [],
+                val3: ''
             },
             beforeCreate: function() {
                 console.log(this.$data);
