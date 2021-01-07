@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <style>
+        .tip {
+            color: red;
+        }
+    </style>
+
+</head>
+
+<body>
+    <div id="app">
+        <h2>添加商品</h2>
+        <label for="name">商品名称</label>
+        <input id="name" type="text" placeholder="输入商品名称" v-model="name"> <span :class="tip">{{name_info}}</span>
+        <br>
+        <label for="price">商品价格</label>
+        <input id="price" type="number" placeholder="输入商品价格" v-model.number="price"><span :class="tip">{{price_info}}</span>
+        <br>
+        <label for="number">商品数量</label>
+        <!-- 转为number类型-->
+        <input id="number " type="number" placeholder="输入商品数量 " v-model.number="number"><span :class="tip">{{number_info}}</span>
+        <br>
+        <button @click="add">增加商品</button>
+
+        <hr>
+
+        <h1>购物车</h1>
+        <table border="1 ">
+            <thead>
+                <tr>
+                    <th>选择</th>
+                    <th colspan="3 ">购物车</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>全选<input type="checkbox" name="select" @click="select_all" v-model="is_all_checked"></td>
+                    <td>商品名称</td>
+                    <td>商品单价</td>
+                    <td>商品数量</td>
+                    <td>操作</td>
+                </tr>
+                <tr v-for="(phone,index) in cart">
+                    <td>
+                        <input type="checkbox" name="select" :value="phone" v-model="select_list">
+                    </td>
+                    <td>{{phone.name}}</td>
+                    <td>{{phone.price}}</td>
+                    <td>
+                        <!-- 绑定.number-->
+                        <input type="number " v-model.number="phone.number ">
+                    </td>
+                    <td><button @click="delete_item(index) ">删除</button></td>
+                </tr>
+                <tr>
+                    <td colspan="2">总计</td>
+                    <td>{{c_total_num}}元</td>
+                    <td>{{c_total_count}}件</td>
+                    <td>已经选择商品名<span v-for="item in select_list">{{item.name}},</span></td>
+                </tr>
+            </tbody>
+
+        </table>
+    </div>
+</body>
+
+<script>
+    let vm = new Vue({
+        el: '#app',
+        data() {
+            return {
+                cart: [{
+                    id: 1,
+                    name: 'iphone 12',
+                    price: 6000,
+                    number: 3
+                }, {
+                    id: 2,
+                    name: 'iphone 10',
+                    price: 5500,
+                    number: 1
+                }, {
+                    id: 3,
+                    name: 'iphone 11',
+                    price: 5000,
+                    number: 2
+                }, {
+                    id: 4,
+                    name: 'iphone 6',
+                    price: 3000,
+                    number: 4
+                }],
+                total_count: 0, // 总数量
+                total_num: 0, // 总价格
+                name: '', // 增加商品名
+                price: 0, // 增加商品价格
+                number: 0, // 增加商品数量
+                tip: 'tip', // 提示类
+                number_info: '',
+                price_info: '',
+                name_info: '',
+                correct_result: [false, false, false], // 校验结果数组
+                select_list: [], // 维护已经添加的数据
+                is_all_checked: false, // 维护是否全选按钮
+            }
+        },
+        /* 计算商品属性 */
+        computed: {
+            c_total_num: function() {
+                this.total_num = 0;
+                this.select_list.forEach(element => {
+                    this.total_num += element.price * element.number
+                });
+                return this.total_num.toFixed(2)
+            },
+            c_total_count: function() {
+                this.total_count = 0;
+                this.select_list.forEach(element => {
+                    this.total_count += element.number;
+                });
+                return this.total_count
+            }
+        },
+        /* 购物车相关方法 */
+        methods: {
+            // 增加商品
+            add: function() {
+                let check = true;
+                // 校验所有数据
+                this.correct_result.forEach(element => {
+                    if (!element)
+                        check = false;
+                })
+                if (!check)
+                    alert("您的输入格式尚存在问题,请检查后再添加!")
+                else
+                    this.cart.push({
+                        name: this.name,
+                        price: this.price,
+                        number: this.number
+                    })
+            },
+            // 删除商品
+            delete_item: function(index) {
+                let cur_phone = this.cart[index]
+                console.log(cur_phone)
+                this.cart.splice(index, 1);
+                // 核心:级联删除选中数组中的元素项
+                for (let i = 0; i < this.select_list.length; i++) {
+                    if (this.select_list[i] == cur_phone) {
+                        this.select_list.splice(i, 1)
+                    }
+                }
+            },
+            // 全选
+            select_all: function() {
+                if (this.is_all_checked) {
+                    this.is_all_checked = false;
+                    this.select_list = [] // 清空
+                } else {
+                    this.select_list = [] // 先清空,以防多选
+                    this.is_all_checked = true;
+                    this.cart.forEach(element => {
+                        this.select_list.push(element)
+                    })
+                }
+            },
+        },
+        /* 监听tip消息 */
+        watch: {
+            name: function(newValue, oldValue) {
+                if (newValue === '') {
+                    this.name_info = '商品价格不能为空'
+                    this.correct_result[0] = false
+                } else {
+                    this.name_info = ''
+                    this.correct_result[0] = true
+                }
+            },
+            price: function(newValue, oldValue) {
+                if (newValue === '' || newValue < 0 || typeof newValue !== 'number') {
+                    this.price_info = '商品价格不能为空或必须为正整数,包括0'
+                    this.correct_result[1] = false
+                } else {
+                    this.price_info = ''
+                    this.correct_result[1] = true
+                }
+            },
+            number: function(newValue, oldValue) {
+                if (newValue === '' || newValue <= 0 || typeof newValue !== 'number') {
+                    this.number_info = '商品价格不能为空或必须为正整数'
+                    this.correct_result[2] = false
+                } else {
+                    this.number_info = ''
+                    this.correct_result[2] = true
+                }
+            },
+            select_list: function(newValue, oldValue) {
+                if (this.select_list.length === this.cart.length)
+                    this.is_all_checked = true
+                else
+                    this.is_all_checked = false
+            }
+
+        }
+    })
+</script>
+
+</html>
