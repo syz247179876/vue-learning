@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script src="./vue.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <p>Vue的组件</p>
+        <!-- 将grade数据从父组件传递给子组件 -->
+        <syz :grade="18"></syz>
+        <syz :grade="19"></syz>
+        <syz :grade="20"></syz>
+        <button_counter></button_counter>
+    </div>
+
+</body>
+<script>
+    /* 组件的定义必须在实例Vue之前 */
+    Vue.component('button_counter', {
+        data: function() {
+            return {
+                count: 0
+            }
+        },
+        template: '<button v-on:click="count++">You clicked me {{ count }} times.</button>'
+    })
+
+    let vm = new Vue({
+        el: '#app',
+        data: {
+
+        },
+        /* 注册组件 */
+        components: {
+            syz: {
+                /* 如果有多个标签错在,则使用顶级标签包裹 */
+                template: `<div>
+                    <p>???????????</p>
+                    <p>欢迎{{grade}}级新生入学</p>
+                    <button @click="welcome">欢迎</button>
+                    <hr>
+                    </div>`,
+                /* 为了复用,同时使得不同用户使用的该组件都是独立的,使用方法 */
+                data() {
+                    return {
+                        grade: 21
+                    }
+                },
+                methods: {
+                    welcome() {
+                        alert(`欢迎${this.grade}级新生入学`);
+                    }
+                },
+                props: ['grade']
+            },
+        }
+    })
+</script>
+
+</html>
