@@ -16,14 +16,16 @@
         </p>
         <!-- 属性不需要带括号 -->
         <p>平均成绩:{{avaPoint}}</p>
-        <p>平均成绩:{{avaPoint}}</p>
-        <p>平均成绩:{{avaPoint}}</p>
-        <p>平均成绩:{{avaPoint}}</p>
         <!-- 函数需要带括号 -->
         <p>平均成绩:{{avaPoint1()}}</p>
-        <p>平均成绩:{{avaPoint1()}}</p>
-        <p>平均成绩:{{avaPoint1()}}</p>
-        <p>平均成绩:{{avaPoint1()}}</p>
+
+        <input type="text" v-model="age"></input>
+        <p>{{info}}</p>
+
+        <input type="text" v-model="beauty">
+        <p>{{beauty_info}}</p>
+
+        <p v-show="isfuck">太惨了</p>
     </div>
 </body>
 <script>
@@ -39,8 +41,12 @@
             }, {
                 name: '王五',
                 point: 77
-            }]
+            }],
+            age: 10,
+            beauty: 88,
+            isfuck: false,
         },
+        /* 计算属性 */
         computed: {
             avaPoint() {
                 let num = 0;
@@ -64,6 +70,30 @@
                 console.log('zjw')
                 return totalNum
             }
+        },
+        /* 监听属性,进行动态改变 */
+        /* 具备两个参数, 新的值和旧的值*/
+        watch: {
+            age: function(newValue, oldValue) {
+                if (newValue < 18) {
+                    this.info = "18禁!"
+                } else if (newValue >= 18) {
+                    this.info = '你已经18岁'
+                }
+            },
+            beauty: function(newValue, oldValue) {
+                if (newValue < 100) {
+                    this.beauty_info = "服务器宕机了"
+                    this.isfuck = false
+                } else if (newValue < 200) {
+                    this.beauty_info = "服务器燃烧了"
+                    this.isfuck = false
+                } else {
+                    this.beauty_info = "升仙了"
+                    this.isfuck = true
+                }
+            },
+
         }
     })
 </script>
