@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport">
+    <title>Document</title>
+    <script src="./vue.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <p v-for="item in res">
+            <span>姓名:{{item.name}}</span>
+            <span>成绩:{{item.point}}</span>
+        </p>
+        <!-- 属性不需要带括号 -->
+        <p>平均成绩:{{avaPoint}}</p>
+        <p>平均成绩:{{avaPoint}}</p>
+        <p>平均成绩:{{avaPoint}}</p>
+        <p>平均成绩:{{avaPoint}}</p>
+        <!-- 函数需要带括号 -->
+        <p>平均成绩:{{avaPoint1()}}</p>
+        <p>平均成绩:{{avaPoint1()}}</p>
+        <p>平均成绩:{{avaPoint1()}}</p>
+        <p>平均成绩:{{avaPoint1()}}</p>
+    </div>
+</body>
+<script>
+    let vm = new Vue({
+        el: '#app',
+        data: {
+            res: [{
+                name: '张三',
+                point: 99
+            }, {
+                name: '李四',
+                point: 88
+            }, {
+                name: '王五',
+                point: 77
+            }]
+        },
+        computed: {
+            avaPoint() {
+                let num = 0;
+                this.res.forEach(element => {
+                    num += element.point
+                });
+                let len = this.res.length;
+                let totalNum = num / len;
+                console.log('syz')
+                return totalNum
+            }
+        },
+        methods: {
+            avaPoint1() {
+                let num = 0;
+                this.res.forEach(element => {
+                    num += element.point
+                });
+                let len = this.res.length;
+                let totalNum = num / len;
+                console.log('zjw')
+                return totalNum
+            }
+        }
+    })
+</script>
+
+</html>
