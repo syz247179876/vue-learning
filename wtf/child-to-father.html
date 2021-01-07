@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <script src="./vue.js">
+    </script>
+</head>
+
+
+<body>
+    <div id="app">
+        <h1>子传父:子组件将数据传给父组件</h1>
+        <mark>子组件传过来的值:{{info}}</mark>
+        <!-- 自定义的emit事件和回调的函数名 -->
+        <child @transfor-father="getData"></child>
+    </div>
+</body>
+<script>
+    let vm = new Vue({
+        el: '#app',
+        data() {
+            return {
+                info: ''
+            }
+        },
+        methods: {
+            getData: function(info) {
+                this.info = info
+            }
+        },
+        components: {
+            child: {
+                template: `
+                <div>
+                    <p>我是子组件, 我要将数据传给父组件</p>
+                    <button @click="transfor"> 传值 </button>
+                    <hr>
+                </div>
+                `,
+                data() {
+                    return {
+                        msg: '来自子组件的数据'
+                    }
+                },
+                methods: {
+                    transfor() {
+                        // 子传父的代码
+                        this.$emit('transfor-father', this.msg)
+                    }
+                }
+            }
+        }
+    })
+</script>
+
+</html>

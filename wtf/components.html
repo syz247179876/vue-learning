@@ -10,10 +10,12 @@
 <body>
     <div id="app">
         <p>Vue的组件</p>
+        <p>组件传值的两种情况</p>
+        <p>父传子,子传父</p>
         <!-- 将grade数据从父组件传递给子组件 -->
-        <syz :grade="18"></syz>
-        <syz :grade="19"></syz>
-        <syz :grade="20"></syz>
+        <syz :grade="year1"></syz>
+        <syz :grade="year2"></syz>
+        <syz :grade="year3"></syz>
         <button_counter></button_counter>
     </div>
 
@@ -31,11 +33,15 @@
 
     let vm = new Vue({
         el: '#app',
+        /* 作为父组件 */
         data: {
-
+            year1: 18,
+            year2: 19,
+            year3: 20
         },
         /* 注册组件 */
         components: {
+            /* 作为子组件 */
             syz: {
                 /* 如果有多个标签错在,则使用顶级标签包裹 */
                 template: `<div>
@@ -45,11 +51,7 @@
                     <hr>
                     </div>`,
                 /* 为了复用,同时使得不同用户使用的该组件都是独立的,使用方法 */
-                data() {
-                    return {
-                        grade: 21
-                    }
-                },
+                data() {},
                 methods: {
                     welcome() {
                         alert(`欢迎${this.grade}级新生入学`);
